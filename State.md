@@ -79,3 +79,4 @@
 - 2026-07-22: B28 published post=608 …
 - 2026-07-23: B29 published post=614 https://naturallift.store/dinocharya-posle-45-rasporyadok-dnya-bez-fanatizma/ (~11.3k, quad S7, wordstat PASS 4264 «утренний ритуал», retitle utility gate)
 - 2026-07-18: Wordstat gate LIVE: `excalibur_blog_wordstat_gate.py` + editorial-policy wordstat_gate (block<200, warn<500); publish auto-gate exit 3; research_start --wordstat default ON; writer injects top phrases. B21 WARN(379), B22 WARN(533). B15 kisetnye=7638; kovsh=38.
+- 2026-07-23: Cloud prep: git repo init → github.com/elenashimanovskaya-sketch/naturallift main=f71b07b; tag backup/pre-cloud-20260723; branch backup/github-pre-cloud-main-20260723 (старый main); zip C:\Cursor\backups\naturallift-site-backup-20260723-170919.zip. EXCALIBUR push 512d819: doctor.py, environment.json, CLOUD-AUTOMATION.md, automation-prompt-dzen-production.md. Automations 09/13/18 MSK → EXCALIBUR repo. Secrets в Cursor Dashboard обязательны.

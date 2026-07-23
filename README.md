@@ -18,7 +18,13 @@ WordPress-тема, плагин Dzen RSS, knowledge-base и контент-пл
 
 ## Backup
 
-Локальные снимки: `C:\Cursor\backups\naturallift-site-backup-*`
+| Тип | Путь |
+|-----|------|
+| Локальный zip | `C:\Cursor\backups\naturallift-site-backup-20260723-170919.zip` |
+| Git tag | `backup/pre-cloud-20260723` → commit `f71b07b` |
+| GitHub branch (старый main) | `backup/github-pre-cloud-main-20260723` |
+
+Откат: `git checkout backup/pre-cloud-20260723` или распаковать zip.
 
 ## Секреты
 
