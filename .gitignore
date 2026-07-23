@@ -1,0 +1,23 @@
+.DS_Store
+._*
+
+# Secrets / local runtime
+teya-memory/teya.env.local
+teya-memory/site.inv
+teya-memory/**/*.local
+teya-memory-archive/
+
+# Temp / debug
+tmp-*
+*.bak-*
+
+# Build artifacts (regenerate via scripts/)
+dist/*.zip
+naturallift-dzen-rss.zip
+
+# EXCALIBUR lives in separate repo — см. README.md
+EXCALIBUR
+
+# Runtime handoff
+.cursor/*-handoff.md
+.cursor/**/fragments/

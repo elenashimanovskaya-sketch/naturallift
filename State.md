@@ -1,0 +1,81 @@
+# State
+
+- 2026-04-24: Start troubleshooting naturallift.store invalid URL issue.
+- DNS: `naturallift.store` and `www.naturallift.store` point to `45.152.87.182`.
+- Server access confirmed: SSH to `root@45.152.87.182` works.
+- Nginx config issue found: duplicate `server_name` on port 80 was present.
+- Current blocker: `nginx.service is not active, cannot reload`.
+- Root cause confirmed: port `443` is occupied by `xray-linux-amd6` (pid `874534`).
+- Next action: inspect xray service/config, move xray off 443 or stop it, then start nginx and verify HTTP/HTTPS.
+- Confirmed: process runs as standalone command `bin/xray-linux-amd64 -c bin/` (not a systemd service).
+- After killing PID `874534`, port `443` becomes occupied again before nginx start; xray is auto-restarted by another mechanism.
+- Identified parent process: `/usr/local/x-ui/x-ui` launches xray.
+- Attempted xray port migration, but xray still binds `443`; nginx cannot start due to port conflict.
+- 2026-04-27: WP — инструкция: Чтение → статич. главная + страница записей «Блог»; убрать «Привет мир»; Дзен — RSS через плагин под формат Дзена, URL из настроек плагина.
+- 2026-04-27: WP — статьи в ленте «Блог» только тип «Запись»; «Страница» в ленту не попадает; искать вторую в Записи/Черновики/Корзина.
+- 2026-04-27: WP — вкладка «Корзина» только если есть удалённые; «Привет мир» → удалить; страница→запись: новая запись + копия контента, меню на URL записи.
+- 2026-04-27: Make→WP 401: в `/wp-json/` у сайта `url` был http, `home` https — выровнять оба URL на https в Настройки→Общие; пароль приложения без пробелов; формат `логин:пароль`.
+- 2026-04-27: Make↔WP naturallift.store — подключение ок (пользователь).
+- 2026-04-30: Аудит `/feed/` naturallift.store: в `<link>` есть utm_* (нарушение Дзена); нет enclosure/`category` Дзена/media:rating; контент с классами блоков WP.
+- 2026-04-30: Добавлен плагин WP `wordpress-plugins/naturallift-dzen-rss/` → лента `/feed/dzen/` (ЧПУ link без utm, enclosure, guid стабильный `?p=ID`, санитизация HTML под справку Дзена). Деплой: загрузить на сервер в `wp-content/plugins/naturallift-dzen-rss/`, активировать, Настройки→Постоянные ссылки→Сохранить; в Дзен указывать только URL этой ленты.
+- 2026-04-30: Проверка prod: `https://naturallift.store/feed/dzen/` → 404 (плагин на сервере не активен/не залит). `/feed/` — UTM в `<link>`, разметка не под чеклист Дзена.
+- 2026-06-08: antivozrastnoj krem price_options=30/1880,50/2250. preview/cosmetics-preview.html v3 — 8 товаров, галерея, related, diag-promo.
+- 2026-06-08: цены в карточках — каждый объём на отдельной строке (sc-card__price-line). knowledge-base/products/ — md составов по slug.
+- 2026-06-08: catalog v4 seed — тексты из KB (anti-age, vv, gidrolat, syvorotka), gallery anti-age +1 фото. dist/naturallift-blog.zip v0.3.0.
+- 2026-06-10: dnevnoj-uvlazhnyayushhij → dnevnoj-krem-dlya-suhoj-kozhi. KB v5: все md, gallery URLs, krem-dlya-ruk-1 главное фото. seed v5, zip v0.3.1.
+- 2026-06-11: teya-memory создан: site.inv, 00-brief.md, teya.env.local (шаблон), semantic-core/naturallift.store-2026-06-11/11-blog-topics.md (B01–B06). Следующий шаг: заполнить FTP в teya.env.local, открыть workspace naturallift-site, /teya-phase2-excalibur B01.
+- 2026-06-17: EXCALIBUR prompts adapted naturallift: site-brief, fact-bank, conversion-map, cover (blog-hero, cover-prompts B01-B06, rose-gold palette), writer 6000-7200 chars, authors-registry Elena. blog-topics parser fixed (table format). Next: /excalibur-blog-run B01 publish:no
+- 2026-06-17: blog-topics обновлён B07-B24 из CSV; 12-articles-registry.md (Тема→URL, 100 тем, matrix deferred). B01-B06 written skip. Sync EXCALIBUR/memory/topics + shared/articles-registry.md. Next: B07 publish:no
+- 2026-06-17: registry URLs synced from user (8 WP posts incl. B01/B03 published slugs). EXCALIBUR shared/published-articles.md updated for interlink/dedupe. cover quad prompt now supports multiple hero refs via blog-hero.reference_urls_hosted.
+- 2026-06-17: B07 draft assembled (research-notes, article.html 6000-7200, meta, schema, QA PASS, link_verify PASS, quad manifest/prompt/batch ready, publish=no). B07 marked in_progress in registries and published-articles ledger.
+- 2026-06-17: B07 quad images generated via gpt-image-2 i2i with 16 hero refs; canvas split to cover+inline-01..03 and injected into article HTML. Files in EXCALIBUR/memory/blog/articles/B07.../cover/.
+- 2026-06-17: B08 published WP post_id=274 https://naturallift.store/2026/06/17/nosogubnye-skladki-kak-rasslabit-myshtsy-podnimateli-kryla-nosa/
+- 2026-06-17: article_format.py (spacers/checklist/ol) + wp_publish/preview hook. Theme style.css v0.3.2: blockquote #e85d4c, ol li b, table air.
+- 2026-06-17: B08 slug сменён на nosogubnye-skladki-kak-rasslabit-myshtsy-nosa; _wp_old_slug есть; AIOSEO Redirects не активен (нет wp_aioseo_redirects). style.css v0.3.3: h3 FAQ font-weight 700, b 700.
+- 2026-06-18: B09 draft WP post_id=287; B10=293 B11=294 B12=295 drafts без картинок. quad prompts в cover/quad-mcp-prompt.txt.
+- 2026-06-18: inject_figures: strip stale inline-quad + validate H2↔inline-0N; QUAD FIGURE BLOCKER. Writer запрет figure в HTML. B09 article.html локально выровнен по manifest.
+- 2026-06-19: quad_manifest scene_hint без гуаша-шаблона; B10/B11/B12 manifests+prompts пересобраны (inline_3 по статье).
+- 2026-06-19: B10 fuchsia quad split+WP draft 293: featured=303 inline=304-306. blog-hero 40+, mkatrin-9022 primary ref, fuchsia palette.
+- 2026-06-19: wave2 plan 13-content-plan-wave2.md; B25–B32 в 11-blog-topics + 12-articles-registry.
+- 2026-06-22: B12 draft 295 republish с картинками: featured=312 inline=313-315 (fuchsia quad, canvas meshki-pod-glazami-chto-delat-1.jpg).
+- 2026-06-22: article_format: strip TL;DR/инсайт из blockquote; Мини-workflow→Миниплан. cover-schemes.json 5 схем (Bnn-1)%5; prompt+ref rotation. B12 текст republish 295 (featured=318).
+- 2026-06-22: B13 article.html+meta+research-notes готовы; utility PASS; quad-mcp-prompt.txt (scheme S3, hook «Ботокс глушит лоб»).
+- 2026-06-23: B13 cover_hook→primary_query; MCP wordstat SSL fail (legacy api.wordstat.yandex.net).
+- 2026-06-23: excalibur_wordstat.py Search API v2; research_start --wordstat; креды YANDEX_CLOUD_* в site.env.local.
+- 2026-06-24: MCP wordstat OK. B13 wordstat: «как убрать морщины на лбу без ботокса» 128. cover S6_youtube_split, hook КАК УБРАТЬ МОРЩИНЫ НА ЛБУ, cover-only-prompt.txt. B13 cover approved user.
+- 2026-06-24: B13 draft WP post=323 (no images). quad-mcp-prompt S6 cover + 3 inline panels.
+- 2026-06-25: quad inject: replace H2→figure (no duplicate heading above inline image). B13 republished.
+- 2026-07-02: Cover S7_problem_hero (B15+): герой+проблема, без текста на cover; inline 3 схемы без изменений. Шаблон cover-problem-hero-template.md, скрипты quad_prompt+manifest.
+- 2026-07-02: B15 draft WP post=367 (13370 chars, S7 cover quad MCP, split OK). S7 cover-only test: cover-preview-s7-test.png. Broken ref in batch: design-4 copy.png 404 — убран при MCP.
+- 2026-07-02: B15 published live post=367 https://naturallift.store/kisetnye-morschiny-kak-vernut-obem-gubam-bez-fillerov/ (13370 chars, S7 quad). S7 prompt+: проблема визуально читаема, split до/после для линий/морщин (на будущее).
+- 2026-07-03: Dzen RSS v1.1.0: убран native-draft (автопубликация); обложка prepend первым figure в content:encoded + WP post_content (excalibur publish cover_prepended). B15 republish OK.
+- 2026-07-04: B16 published post=387 (12062 chars, S6_youtube_split cover согласован, quad MCP, cover_prepended). quad_manifest: meta.cover_scheme_id override S7 default.
+- 2026-07-04: B16 fix: убран cover_prepended из excalibur_blog_wp_publish.py (дубль: theme featured + figure в content). B16 → S7_problem_hero, republish post=387 featured=402 cover-2.jpg, content без figure-обложки. Дзен prepend только в RSS plugin.
+- 2026-07-05: CTA Моя косметика: page-catalog → main-silver-cream (conversion-map, B15/B16). B15 republish post=367 без cover figure в content (fix дубль обложки).
+- 2026-07-06: page-quiz intro: до-после.jpg broken → mkatrin-9022.jpg + img tag; naturallift_get_quiz_intro_image_url()
+- 2026-07-06: PROD: functions.php FTP; bulk-fix 15 WP posts page-quiz→diagnostika-kozhi; republish B08=442 B13=323 B14=349 B15=367 B16=387; 301 page-quiz OK.
+- 2026-07-06: quiz images: intro before-after.jpg; step4 hand-made-silver-cream; step5 face-yoga-with-silver-cream-oils; results evening hand-made.
+- 2026-07-06: quiz intro → diagnostika-of-the-skin.jpg; page-quiz.php+functions.php FTP; skip-lazy; live OK.
+- 2026-07-06: quiz step1 отдельно → before-after.jpg (intro остаётся diagnostika-of-the-skin).
+- 2026-07-06: B17 research+article.html+meta (12250 chars) utility PASS; comparison ревитоника vs фейс-йога.
+- 2026-07-06: B17 → фейсбилдинг (без Ревитоники/Дубинской); quad S7; published post=478 https://naturallift.store/feysbilding-vs-feys-yoga-chto-vybrat-dlya-bystrogo-rezultata/
+- 2026-07-06: B17 gemini-3.1-pro draft article.gemini-draft.html (30423 chars); composer backup article.composer-v1.html
+- 2026-07-08: B19 published post=496 ~12k chars elena-dzen; exercise inline_3; https://naturallift.store/vtoroy-podborodok-pochemu-dieta-ne-pomogaet-i-pri-chem-tut-yazyk/
+- 2026-07-08: elena-dzen-writer-prompt min 12000 chars
+- 2026-07-07: cover exercise_steps_host — Елена пошагово на inline при упражнениях (inline-visual-types, quad_manifest, cover_quad_prompt)
+- 2026-07-07: B17 republished post=478 авторский текст Елены; inline 486-488; featured=485
+- 2026-07-09: cover pipeline locked: yoga-set blog-hero; filter_portrait; 1 ref/batch; sanitize guillemets in cover_quad_prompt
+- 2026-07-09: B20 post=502 rewrite B19 rhythm ~12042; ref img_0490; backup composer-v1; https://naturallift.store/sutulost-i-litso-kak-vasha-spina-risuet-vam-morschiny/
+- 2026-07-09: B18 post=490 title SEO: ковш 42→упражнения для подбородка 3884; новый title без Ковш; slug сохранён
+- 2026-07-18: Grok успешно написал статью. Переход на новую страницу, предыдущая готова на >90%.
+- 2026-07-18: Writer — «точки внимания» в elena-dzen-writer-prompt.md + excalibur_blog_gemini_writer.py + writer-excalibur-blog SKILL: blockquote, жирный лид, h2, ul, эмодзи, Миниплан, <b>Метка.</b>.
+- 2026-07-18: Writer финал: Telegram CTA (🔥 синяя ссылка + blockquote ❓ вопросы) — elena-dzen-writer-prompt §ФИНАЛ, gemini_writer tg_cta_from_env, conversion-map, site.env.local NATURALLIFT_TELEGRAM_*.
+- 2026-07-18: B22 published post=538 https://naturallift.store/asimmetriya-litsa-pochemu-my-zhuem-na-odnoy-storone-i-kak-eto-ispravit/ (~12k, новый формат + Telegram + quad).
+- 2026-07-20: B24 published post=584 https://naturallift.store/uprazhnenie-ramka-udlinyaem-sheyu-i-ubiraem-vtoroy-podborodok/ (~12k, quad S7, wordstat PASS 1448).
+- 2026-07-19: B23 published post=578 https://naturallift.store/bukkalnyy-massazh-pochemu-nuzhno-massirovat-litso-iznutri/ (~12k, quad S7, wordstat PASS 6414).
+- 2026-07-21: B25 published post=590 https://naturallift.store/omolozhenie-kak-obraz-zhizni-7-privychek-kotorye-starjat-silnee-morschin/ (~12k, quad S7, wordstat PASS 22080). Auto-publish: excalibur_blog_quad_publish.py.
+- 2026-07-21: B26 published post=596 https://naturallift.store/vata-pita-kapha-kakoy-uhod-i-feys-praktiki-vam-podhodyat-seychas/ (~12k, quad S7, wordstat PASS 320, retitle utility gate).
+- 2026-07-22: B27 published post=602 … format ref saved → memory/brief/samples/article-format-reference-b27.html
+- 2026-07-22: B28 published post=608 …
+- 2026-07-23: B29 published post=614 https://naturallift.store/dinocharya-posle-45-rasporyadok-dnya-bez-fanatizma/ (~11.3k, quad S7, wordstat PASS 4264 «утренний ритуал», retitle utility gate)
+- 2026-07-18: Wordstat gate LIVE: `excalibur_blog_wordstat_gate.py` + editorial-policy wordstat_gate (block<200, warn<500); publish auto-gate exit 3; research_start --wordstat default ON; writer injects top phrases. B21 WARN(379), B22 WARN(533). B15 kisetnye=7638; kovsh=38.

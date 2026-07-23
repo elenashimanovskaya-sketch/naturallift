@@ -1,0 +1,36 @@
+{
+  "shapes": {
+    "buttons": {
+      "type": "rectangle",
+      "border_radius": "0px",
+      "border": "1px solid #d4b8b8",
+      "background": "transparent",
+      "hover_background": "#e8b4bc",
+      "hover_border": "1px solid #e8b4bc"
+    },
+    "category_images": {
+      "type": "circle",
+      "border_radius": "50%",
+      "border": "none"
+    },
+    "hero_card": {
+      "type": "rectangle",
+      "border_radius": "0px",
+      "background": "#ffffff",
+      "box_shadow": "none",
+      "overlap": "margin-top: -100px; position: relative; z-index: 10;"
+    },
+    "dividers": {
+      "type": "line",
+      "height": "1px",
+      "background": "#d4b8b8",
+      "width": "100%"
+    },
+    "inputs": {
+      "type": "rectangle",
+      "border_radius": "0px",
+      "border": "1px solid #d4b8b8",
+      "background": "#ffffff"
+    }
+  }
+}

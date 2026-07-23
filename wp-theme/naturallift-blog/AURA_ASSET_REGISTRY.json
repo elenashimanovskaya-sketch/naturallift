@@ -1,0 +1,13 @@
+{
+  "assets": [
+    {
+      "id": "brand_kit_01",
+      "role": "brand-kit",
+      "generationTool": "user-mcp-kv/gpt-image-2",
+      "backgroundRemovalTool": null,
+      "generatedImageUrl": "https://tempfile.aiquickdraw.com/images/chatgpt/7518a41735c92159485c1158c9750867_a780832a6ce14f99ac51271fb7dc9404.png",
+      "transparentImageUrl": null,
+      "prompt": "A comprehensive brand-kit presentation board for a natural face yoga and rejuvenation blog. The board is divided into sections: 1. Color Palette (linen #f2f0eb, white #ffffff, blush #f5dfe3, blush-deep #d4b8b8, rose-silk #e8b4bc, gold-mid #c9a227). 2. Typography (elegant serif headings, clean sans-serif body). 3. UI Components (soft rounded buttons, elegant thin borders). 4. Photography style (natural, glowing skin, yoga, soft light). 5. Layout preview (clean, airy, feminine, minimalist). High quality, elegant, professional layout, Dribbble style presentation, soft pastel pinks and golds."
+    }
+  ]
+}
